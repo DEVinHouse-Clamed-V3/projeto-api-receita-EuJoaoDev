@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { RecipeIngredient } from "./RecipeIngredient";
+import { RecipeStep } from "./RecipeStep";
 
 @Entity("recipes")
 export class Recipe {
@@ -19,4 +21,10 @@ export class Recipe {
 
   @UpdateDateColumn({ type: "timestamp" })
   updated_at: Date;
+
+  @OneToMany(() => RecipeIngredient, (ingredient) => ingredient.recipe)
+  ingredients: RecipeIngredient[];
+
+  @OneToMany(() => RecipeStep, (step) => step.recipe)
+  steps: RecipeStep[];
 }
